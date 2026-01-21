@@ -103,13 +103,13 @@ int GetInfo(char*szNameOut, time_t*nDate, WINDOWPOSITION*nType)
 	
 	/* Probably should do some error checking for the following code. */
 	*nDate=ConvertCharToDate(NULL, szDate);
-	if(strnicmp("ul", szType, 2)==0)
+	if(_strnicmp("ul", szType, 2)==0)
 		*nType=UPPER_LEFT;
-	else if(strnicmp("ur", szType, 2)==0)
+	else if(_strnicmp("ur", szType, 2)==0)
 		*nType=UPPER_RIGHT;
-	else if(strnicmp("ll", szType, 2)==0)
+	else if(_strnicmp("ll", szType, 2)==0)
 		*nType=LOWER_LEFT;
-	else if(strnicmp("lr", szType, 2)==0)
+	else if(_strnicmp("lr", szType, 2)==0)
 		*nType=LOWER_RIGHT;
 	else
 		*nType=POS_UNKNOWN;
