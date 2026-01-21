@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Code">
+      <UniqueIdentifier>{1d7d8c7c-089f-462a-b8ee-94c2fb9514e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{1fc7f6c8-5398-4eee-a283-a8578d241bfa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Code\countdown.c">
+      <Filter>Code</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Res\Countdown.ico">
+      <Filter>Res</Filter>
+    </Image>
+    <Image Include="..\Res\small.ico">
+      <Filter>Res</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Res\Countdown.rc">
+      <Filter>Res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Res\Resource.h">
+      <Filter>Res</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Res\targetver.h">
+      <Filter>Res</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
