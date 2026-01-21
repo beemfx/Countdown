@@ -6,7 +6,7 @@
 typedef enum tagWINDOWPOSITION {POS_UNKNOWN=0, UPPER_LEFT, UPPER_RIGHT, LOWER_LEFT, LOWER_RIGHT} WINDOWPOSITION;
 
 
-signed long ConvertCharToDate(struct tm * sDateOutput, char * szInput)
+time_t ConvertCharToDate(struct tm * sDateOutput, char * szInput)
 {
 	char szTemp[100];
 	struct tm sDate;
@@ -36,35 +36,35 @@ signed long ConvertCharToDate(struct tm * sDateOutput, char * szInput)
 	return mktime(&sDate);
 }
 
-signed long SecondsLeft(char* szOutput, const time_t nDepartTime)
+void SecondsLeft(char* szOutput, const time_t nDepartTime)
 {
-	time_t nTime=0, nTimeLeft=0;
+	time_t nTime=0;
 	char szBeginString[11];
 	
 	nTime=time(NULL);
 
+	double DiffTime = difftime(nDepartTime, nTime);
 
-
-	
-	nTimeLeft=nDepartTime-nTime;
-
-	if(nTimeLeft>=0)
+	if(DiffTime>=0.)
+	{
 		strcpy(szBeginString, "Time Left");
+	}
 	else
+	{
 		strcpy(szBeginString, "Time Since");
+		DiffTime = -DiffTime;
+	}
 
-	nTimeLeft=abs(nTimeLeft);
+	const int DiffTimeSecs = (int)DiffTime;
 	
-	sprintf(szOutput, "%s:\n\nSeconds: %i\nMinutes: %i\nHours:   %i\nDays:    %i\nWeeks:   %i\nMonths:  %.1f",
+	sprintf(szOutput, "%s:\n\nSeconds: %d\nMinutes: %d\nHours:   %d\nDays:    %d\nWeeks:   %d\nMonths:  %.1f",
 		szBeginString, 
-		nTimeLeft, 
-		nTimeLeft/60,
-		nTimeLeft/60/60,
-		nTimeLeft/60/60/24,
-		nTimeLeft/60/60/24/7,
-		(float)nTimeLeft/60/60/24/31);
-
-	return (signed long)nDepartTime;
+		DiffTimeSecs,
+		DiffTimeSecs/60,
+		DiffTimeSecs/60/60,
+		DiffTimeSecs/60/60/24,
+		DiffTimeSecs/60/60/24/7,
+		(float)DiffTimeSecs/60/60/24/31);
 }
 
 int GetInfo(char*szNameOut, time_t*nDate, WINDOWPOSITION*nType)
@@ -152,7 +152,7 @@ HRESULT PaintWindow(HWND hwnd, HFONT hFont, const time_t nDepartTime)
 	hOldFont=SelectObject(hdc, hFont);
 	rect.top+=8;
 	rect.left+=8;
-	DrawText(hdc, szText, strlen(szText), &rect, 0);
+	DrawText(hdc, szText, (int)strlen(szText), &rect, 0);
 	SelectObject(hdc, hOldFont);
 	SelectObject(hdc, hOldPen);
 	/* Draw a border */
@@ -329,6 +329,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR szCmdLine, int nS
         TranslateMessage(&msg); 
         DispatchMessage(&msg);
     }
-    return msg.wParam;
+    return 0;
 }
 
